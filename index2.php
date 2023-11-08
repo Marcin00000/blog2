@@ -52,6 +52,7 @@
             // define how many results you want per page
             $results_per_page = 6;
 
+
             // find out the number of results stored in database
             $sql='SELECT * FROM wpis';
             $result = mysqli_query($con, $sql);
