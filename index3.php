@@ -52,44 +52,8 @@
                 magni?</p>
         </article>
 
-        <article>
-            <h2>This is an Article</h2>
-            <p>This is independent content</p>
-            <ul>
-                <li>News Article</li>
-                <li>Job Post</li>
-                <li>Blog Post</li>
-            </ul>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione quidem, repudiandae, suscipit illum
-                animi ullam omnis at laborum eaque dolorem aliquam quos iure cum deserunt asperiores facere sed totam
-                magni?</p>
-        </article>
 
-        <article>
-            <h2>This is an Article</h2>
-            <p>This is independent content</p>
-            <ul>
-                <li>News Article</li>
-                <li>Job Post</li>
-                <li>Blog Post</li>
-            </ul>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione quidem, repudiandae, suscipit illum
-                animi ullam omnis at laborum eaque dolorem aliquam quos iure cum deserunt asperiores facere sed totam
-                magni?</p>
-        </article>
 
-        <article>
-            <h2>This is an Article</h2>
-            <p>This is independent content</p>
-            <ul>
-                <li>News Article</li>
-                <li>Job Post</li>
-                <li>Blog Post</li>
-            </ul>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione quidem, repudiandae, suscipit illum
-                animi ullam omnis at laborum eaque dolorem aliquam quos iure cum deserunt asperiores facere sed totam
-                magni?</p>
-        </article>
 
     </div>
 
