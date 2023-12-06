@@ -6,7 +6,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Blog</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link href="comm/comments.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="container">
@@ -33,7 +34,7 @@
             </ul>
         </aside>
 
-        <div class="content">
+        <div class="contents">
 
             <?php
             try {
@@ -46,6 +47,7 @@
                 } else {
                     $id = $_GET['id'];
                 }
+                $comment_id = $id;
 
                 // retrieve selected results from database and display them on page
                 $sql = 'SELECT * FROM article_entry_view where id_article = ' . $id;
@@ -70,6 +72,33 @@
 
 
             ?>
+            <div class="comments"></div>
+
+            <script>
+                const comments_page_id = <?=$comment_id?>; // This number should be unique on every page
+                fetch("comm/comments.php?page_id=" + comments_page_id).then(response => response.text()).then(data => {
+                    document.querySelector(".comments").innerHTML = data;
+                    document.querySelectorAll(".comments .write_comment_btn, .comments .reply_comment_btn").forEach(element => {
+                        element.onclick = event => {
+                            event.preventDefault();
+                            document.querySelectorAll(".comments .write_comment").forEach(element => element.style.display = 'none');
+                            document.querySelector("div[data-comment-id='" + element.getAttribute("data-comment-id") + "']").style.display = 'block';
+                            document.querySelector("div[data-comment-id='" + element.getAttribute("data-comment-id") + "'] input[name='name']").focus();
+                        };
+                    });
+                    document.querySelectorAll(".comments .write_comment form").forEach(element => {
+                        element.onsubmit = event => {
+                            event.preventDefault();
+                            fetch("comm/comments.php?page_id=" + comments_page_id, {
+                                method: 'POST',
+                                body: new FormData(element)
+                            }).then(response => response.text()).then(data => {
+                                element.parentElement.innerHTML = data;
+                            });
+                        };
+                    });
+                });
+            </script>
 
 
         </div>

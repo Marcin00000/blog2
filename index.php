@@ -1,3 +1,13 @@
+<?php
+// We need to use sessions, so you should always start sessions using the below code.
+session_start();
+// If the user is not logged in redirect to the login page...
+if (!isset($_SESSION['loggedin'])) {
+    header('Location: test\login.html');
+    exit;
+}
+?>
+
 <!doctype html>
 <html lang="pl">
 <head>
@@ -6,7 +16,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Blog</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 <div class="container">
@@ -18,8 +28,10 @@
     <ul>
         <li><a href="index.php">Home</a></li>
         <li><a href="index2.php">Wpisy</a></li>
-        <li><a href="index3.php">ToDo</a></li>
+        <li><a href="index3.php">Oczko</a></li>
         <li><a href="index.php">ToDo</a></li>
+        <li><a href="test/profile.php">Profile</a></li>
+
     </ul>
 </nav>
 
@@ -37,11 +49,11 @@
         </ul>
     </aside>
 
-    <div class="content">
+    <div class="contents">
 
         <article>
-            <h2>This is an Article</h2>
-            <p>This is independent content</p>
+            <h2>Home Page</h2>
+            <p><?=$_SESSION['name']?></p>
             <ul>
                 <li>News Article</li>
                 <li>Job Post</li>

@@ -14,7 +14,7 @@
         <ul>
             <li><a href="index.php">Home</a></li>
             <li><a href="index2.php">Wpisy</a></li>
-            <li><a href="index.php">ToDo</a></li>
+            <li><a href="index3.php">Oczko</a></li>
             <li><a href="index.php">ToDo</a></li>
         </ul>
     </nav>
@@ -33,7 +33,7 @@
             </ul>
         </aside>
 
-        <div class="content">
+        <div class="contents">
 
             <!--            <article>-->
             <!--                <h2>This is an test Article</h2>-->
@@ -125,7 +125,7 @@
 
                 while ($row = mysqli_fetch_array($result)) {
                     // Add a link to each article
-                    echo "<article>";
+                    echo "<article class='wpis'>";
                     echo "<h2><a href='article.php?id=" . $row['id_article'] . "'>" . $row['title'] . "</a></h2>";
                     echo "<p>" . $row['text'] . "</p>";
                     echo '</article>';
