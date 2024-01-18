@@ -62,3 +62,4 @@ $num_contacts = $pdo->query('SELECT COUNT(*) FROM contacts')->fetchColumn();
 </div>
 
 <?= template_footer() ?>
+

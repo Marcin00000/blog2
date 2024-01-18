@@ -1,6 +1,6 @@
 <?php
 // Below is optional, remove if you have already connected to your database.
-$mysqli = mysqli_connect('localhost', 'root', '', 'pagination');
+$mysqli = mysqli_connect('localhost', 'root', '', 'blog');
 
 // Get the total number of records from our table "students".
 $total_pages = $mysqli->query('SELECT * FROM students')->num_rows;

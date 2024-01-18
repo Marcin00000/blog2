@@ -38,7 +38,7 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?'
     // Store the result so we can check if the account exists in the database.
     if ($stmt->num_rows > 0) {
         // Username already exists
-        echo 'Username exists, please choose another!';
+        echo 'Username exists, please choose another!<a href="register.html">Go back to registration</a>';
     } else {
         // Username doesn't exists, insert new account
         if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email) VALUES (?, ?, ?)')) {

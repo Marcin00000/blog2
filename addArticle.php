@@ -1,81 +1,86 @@
-<!doctype html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dodaj artykuł</title>
-    <link rel="stylesheet" href="style.css" type="text/css">
-    <link href="comm/comments.css" rel="stylesheet" type="text/css">
-</head>
 <?php
-include('functions.php');
-$pdo = pdo_connect_mysql();
-if(isset($_REQUEST['submit']))
-{
-    $content = $_REQUEST['content'];
+include 'functions.php';
+// We need to use sessions, so you should always start sessions using the below code.
+session_start();
+// If the user is not logged in redirect to the login page...
+if (!isset($_SESSION['loggedin'])) {
+    header('Location: test\login.html');
+    exit;
+}
+?>
 
-    $insert_query = mysqli_query($connection, "insert into tbl_ckeditor set content='$content'");
-    $stmt = $pdo->prepare('INSERT INTO article set  ');
-    if($insert_query)
-    {
-        $msg = "Data Inserted";
+<?= template_head('Dodaj artykuł') ?>
+<style>
+    .contents{
+        background-color: #f2e9e4;
     }
-    else
-    {
-        $msg = "Error";
+</style>
+
+<?php
+try {
+//    include('functions.php');
+    $pdo = pdo_connect_mysql();
+    $msg = '';
+    if (isset($_REQUEST['submit'])) {
+        if (!empty($_POST['content'])) {
+            $title = isset($_POST['title']) ? $_POST['title'] : '';
+            $content = $_POST['content'];
+            $id = '';
+            $autor = $_SESSION['id'];
+            $date = date('Y-m-d H:i:s');
+            $stmt = $pdo->prepare('INSERT INTO articles VALUES (?, ?,?,?,?)');
+            $stmt->execute([$id, $title, $content, $autor, $date]);
+            $msg = 'Created Successfully!';
+            header("Location: index2.php");
+            exit();
+
+        } else {
+            $msg = 'Błąd danych';
+//            header("Location: addArticle.php");
+//            exit();
+        }
     }
+} catch (Exception $e) {
+    echo 'Wystąpił wyjątek nr ' . $e->getCode() . ', jego komunikat to:
+                        ' . $e->getMessage();
 }
 ?>
 <body>
 <div class="container">
-    <nav class="navbar">
-        <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="index2.php">Wpisy</a></li>
-            <li><a href="index3.php">ToDo</a></li>
-            <li><a href="index.php">ToDo</a></li>
-        </ul>
-    </nav>
+
+    <?= template_nav() ?>
 
     <main>
         <aside>
-            <!--            <h2>This is Aside</h2>-->
-            <!--            <p>This is side content</p>-->
-            <!--            <ul>-->
-            <!--                <li>author information</li>-->
-            <!--                <li>fun facts</li>-->
-            <!--                <li>quotes</li>-->
-            <!--                <li>external links</li>-->
-            <!--                <li>comments</li>-->
-            <!--                <li>related content</li>-->
-            <!--            </ul>-->
         </aside>
 
         <div class="contents">
-            <h1>Classic editor</h1>
-<!--            <div id="editor">-->
-<!--                <p>This is some sample content.</p>-->
-<!--            </div>-->
+            <h1>Dodawanie wpisu | użytkownik > <?= $_SESSION['name'] ?></h1>
+            <!--            <div id="editor">-->
+            <!--                <p>This is some sample content.</p>-->
+            <!--            </div>-->
             <form method="post">
                 <div class="form-group">
-                    <textarea id="content" name="content" class="form-control"></textarea>
+                    <label for="title">Tytuł</label>
+                    <input type="text" name="title" placeholder="Tytuł wpisu" id="title" required>
+
+                    <textarea id="content" name="content" class="form-control" placeholder="Treść wpisu" ></textarea>
                 </div>
                 <div class="form-group">
-                    <input type="submit" name="submit" value="Save" class="btn btn-primary">
+                    <input type="submit" name="submit" value="Zapisz" class="bn632-hover bn25">
+
                 </div>
             </form>
-            <div class="error"><?php if(!empty($msg)){ echo $msg; } ?></div>
+            <?php if ($msg): ?>
+                <p><?= $msg ?></p>
+            <?php endif; ?>
 
 
         </div>
 
     </main>
 
-    <footer>
-        <p>Autor xyz</p>
-    </footer>
+    <?= template_foot() ?>
 
 </div>
 
@@ -86,10 +91,17 @@ if(isset($_REQUEST['submit']))
 <script src="ckeditor/translations/pl.js"></script>
 <script>
     ClassicEditor
-        .create(document.querySelector('#content'),{
-            language: 'pl'
+        .create(document.querySelector('#content'), {
+            // language: 'pl'
+            ckfinder:
+                {
+                    uploadUrl: 'fileupload.php'
+                }
 
-    })
+        })
+        .then(editor => {
+            console.log(editor);
+        })
         .catch(error => {
             console.error(error);
         });

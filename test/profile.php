@@ -36,9 +36,14 @@ $stmt->close();
 <nav class="navtop">
     <div>
         <h1>Website Title</h1>
-        <a href="profile.php"><i class="fas fa-user-circle"></i>Profile</a>
-        <a href="../index.php"><i class="fas fa-user-circle"></i>blog</a>
-        <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        <a href="profile.php"><i class="fas fa-user-circle"></i>Profil</a>
+        <a href="../index.php"><i class="fas fa-user-circle"></i>Blog</a>
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Wyloguj</a>
+        <?php
+        if ($_SESSION['admin']){
+        echo "<a href='../panelAdmin/index.php'>Panel administracyjny</a>";
+        }
+        ?>
     </div>
 </nav>
 <div class="content">

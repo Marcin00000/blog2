@@ -85,6 +85,41 @@ body {
 .read .pagination a:hover {
     background-color: #999b9d;
 }
+/*.read .pagination {*/
+/*    list-style-type: none;*/
+/*    padding: 10px 0;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    box-sizing: border-box;*/
+/*}*/
+/*.read .pagination li {*/
+/*    box-sizing: border-box;*/
+/*    padding-right: 10px;*/
+/*}*/
+/*.read .pagination li a {*/
+/*    box-sizing: border-box;*/
+/*    background-color: #e2e6e6;*/
+/*    padding: 8px;*/
+/*    text-decoration: none;*/
+/*    font-size: 12px;*/
+/*    font-weight: bold;*/
+/*    color: #616872;*/
+/*    border-radius: 4px;*/
+/*}*/
+/*.read .pagination li a:hover {*/
+/*    background-color: #d4dada;*/
+/*}*/
+/*.read .pagination .next a, .pagination .prev a {*/
+/*    text-transform: uppercase;*/
+/*    font-size: 12px;*/
+/*}*/
+/*.read .pagination .currentpage a {*/
+/*    background-color: #518acb;*/
+/*    color: #fff;*/
+/*}*/
+/*.read .pagination .currentpage a:hover {*/
+/*    background-color: #518acb;*/
+/*}*/
 .read table {
     width: 100%;
     padding-top: 30px;

@@ -1,3 +1,14 @@
+<?php
+include 'functions.php';
+// We need to use sessions, so you should always start sessions using the below code.
+session_start();
+// If the user is not logged in redirect to the login page...
+if (!isset($_SESSION['loggedin'])) {
+    header('Location: test\login.html');
+    exit;
+}
+?>
+
 <!doctype html>
 <html lang="pl">
 <head>
@@ -8,30 +19,16 @@
     <title>Blog</title>
     <link rel="stylesheet" href="style.css" type="text/css">
     <link href="comm/comments.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link rel="stylesheet" href="fontawesome6.5.1-web/css/all.css">
 </head>
 <body>
 <div class="container">
-    <nav class="navbar">
-        <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="index2.php">Wpisy</a></li>
-            <li><a href="index3.php">ToDo</a></li>
-            <li><a href="index.php">ToDo</a></li>
-        </ul>
-    </nav>
+
+    <?= template_nav() ?>
 
     <main>
         <aside>
-            <h2>This is Aside</h2>
-            <p>This is side content</p>
-            <ul>
-                <li>author information</li>
-                <li>fun facts</li>
-                <li>quotes</li>
-                <li>external links</li>
-                <li>comments</li>
-                <li>related content</li>
-            </ul>
         </aside>
 
         <div class="contents">
@@ -50,18 +47,27 @@
                 $comment_id = $id;
 
                 // retrieve selected results from database and display them on page
-                $sql = 'SELECT * FROM article_entry_view where id_article = ' . $id;
+                $sql = 'SELECT * FROM articles where id = ' . $id;
                 $result = mysqli_query($con, $sql);
                 $row = mysqli_fetch_array($result);
+                $sql2 = 'SELECT * FROM accounts where id = ' . $row['autor'];
+                $result2 = mysqli_query($con, $sql2);
+                $row2 = mysqli_fetch_array($result2);
 
                 echo "<article>";
                 echo "<h2>" . $row['title'] . "</h2>";
 
                 $result = mysqli_query($con, $sql);
                 while ($row = mysqli_fetch_array($result)) {
-                    echo "<p>" . $row['text'] . "</p>";
+                    echo "<p>" . $row['content'] . "</p>";
                 }
+                echo "Autor: " . $row2['username']."(". $row2['id'].")";
                 echo '</article>';
+
+                echo "<div class='button-container'>";
+                echo "<a href='updatearticle.php?id=" . $id . "'><button class='bn632-hover bn22'><i class='fas fa-pen fa-xs'></i>  Edytuj</button></a>" ;
+                echo "<a href='delarticle.php?id=" . $id . "'><button class='bn632-hover bn27'><i class='fas fa-trash fa-xs'></i>   Usuń</button></a>" ;
+                echo "</div>";
 
                 mysqli_close($con);
 
@@ -70,8 +76,8 @@
                         ' . $e->getMessage();
             }
 
-
             ?>
+
             <div class="comments"></div>
 
             <script>
@@ -100,14 +106,11 @@
                 });
             </script>
 
-
         </div>
 
     </main>
 
-    <footer>
-        <p>Autor xyz</p>
-    </footer>
+    <?= template_foot() ?>
 
 </div>
 

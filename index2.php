@@ -1,23 +1,20 @@
-<!doctype html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Blog</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<?php
+include 'functions.php';
+// We need to use sessions, so you should always start sessions using the below code.
+session_start();
+// If the user is not logged in redirect to the login page...
+if (!isset($_SESSION['loggedin'])) {
+    header('Location: test\login.html');
+    exit;
+}
+?>
+
+<?= template_head('Artykuły') ?>
+
 <body>
 <div class="container">
-    <nav class="navbar">
-        <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="index2.php">Wpisy</a></li>
-            <li><a href="index3.php">Oczko</a></li>
-            <li><a href="index.php">ToDo</a></li>
-        </ul>
-    </nav>
+
+    <?= template_nav() ?>
 
     <main>
         <aside>
@@ -34,14 +31,6 @@
         </aside>
 
         <div class="contents">
-
-            <!--            <article>-->
-            <!--                <h2>This is an test Article</h2>-->
-            <!--                <p>This is independent content</p>-->
-            <!--                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione quidem, repudiandae, suscipit illum-->
-            <!--                    animi ullam omnis at laborum eaque dolorem aliquam quos iure cum deserunt asperiores facere sed totam-->
-            <!--                    magni?</p>-->
-            <!--            </article>-->
 
 <!--            --><?php
 //            //            dupa
@@ -94,6 +83,7 @@
 //            ?>
 
             <?php
+
             // connect to database
             try {
                 $con = mysqli_connect('localhost', 'root', '');
@@ -102,7 +92,7 @@
                 $results_per_page = 6;
 
                 // find out the number of results stored in the database
-                $sql = 'SELECT * FROM article ';
+                $sql = 'SELECT * FROM articles ';
                 $result = mysqli_query($con, $sql);
                 $number_of_results = mysqli_num_rows($result);
 
@@ -120,14 +110,14 @@
                 $this_page_first_result = ($page - 1) * $results_per_page;
 
                 // retrieve selected results from the database and display them on the page
-                $sql = 'SELECT * FROM unique_article_entry_view LIMIT ' . $this_page_first_result . ',' . $results_per_page;
+                $sql = 'SELECT * FROM articles ORDER BY id DESC LIMIT ' . $this_page_first_result . ',' . $results_per_page;
                 $result = mysqli_query($con, $sql);
 
                 while ($row = mysqli_fetch_array($result)) {
                     // Add a link to each article
                     echo "<article class='wpis'>";
-                    echo "<h2><a href='article.php?id=" . $row['id_article'] . "'>" . $row['title'] . "</a></h2>";
-                    echo "<p>" . $row['text'] . "</p>";
+                    echo "<h2><a href='article.php?id=" . $row['id'] . "'>" . $row['title'] . "</a></h2>";
+                    echo "<p>" . $row['content'] . "</p>";
                     echo '</article>';
                 }
 
@@ -148,9 +138,7 @@
 
     </main>
 
-    <footer>
-        <p>Autor xyz</p>
-    </footer>
+    <?= template_foot() ?>
 
 </div>
 
