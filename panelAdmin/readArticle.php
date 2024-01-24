@@ -32,29 +32,25 @@ if ($stmt = $pdo->prepare('SELECT * FROM articles ORDER BY id LIMIT :calc_page, 
     <?= template_header('Read') ?>
 
     <div class="content read">
-        <h2>Stwórz artykuł</h2>
-        <a href="../addArticle.php" class="create-contact">Stwórz artykuł</a>
+        <h2>Zarządzaj  artykułami</h2>
+        <a href="../addArticle.php" class="create-contact"><i class="fa-solid fa-plus"></i> Stwórz artykuł</a>
         <table>
             <thead>
             <tr>
                 <td>#</td>
-                <td>Name</td>
-                <td>Email</td>
-                <td>Phone</td>
-<!--                <td>Title</td>-->
-<!--                <td>Created</td>-->
-                <td></td>
+                <td>Tytuł</td>
+                <td>Autor</td>
+                <td>Data</td>
+                <td>Akcja</td>
             </tr>
             </thead>
             <tbody>
             <?php foreach ($contacts as $contact): ?>
                 <tr>
-                    <td><?= $contact['id'] ?></td>
+                    <td><?php echo "<a href='../article.php?id=" . $contact['id'] . "'>" . $contact['id'] . "</a>";?></td>
                     <td><?= $contact['title'] ?></td>
                     <td><?= $contact['autor'] ?></td>
                     <td><?= $contact['data'] ?></td>
-<!--                    <td>--><?php //= $contact['admin'] ?><!--</td>-->
-<!--                    <td>--><?php //= $contact['admin'] ?><!--</td>-->
                     <td class="actions">
                         <a href="../updateArticle.php?id=<?= $contact['id'] ?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
                         <a href="deleteArticle.php?id=<?= $contact['id'] ?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>

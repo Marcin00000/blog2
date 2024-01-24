@@ -10,7 +10,7 @@ body {
     margin: 0;
 }
 .navtop {
-    background-color: #3f69a8;
+    background-color: #2f3947   ;
     height: 60px;
     width: 100%;
     border: 0;
@@ -166,6 +166,10 @@ body {
     text-decoration: none;
     color: #FFFFFF;
     padding: 10px 12px;
+}
+.edit, .trash{
+    max-width: 40px;
+    text-align: center;
 }
 .read table tbody tr td.actions .trash {
     background-color: #b73737;

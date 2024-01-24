@@ -1,0 +1,195 @@
+
+
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blog</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link href="comm/comments.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link rel="stylesheet" href="fontawesome6.5.1-web/css/all.css">
+</head>
+<style>
+    .game {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        flex-direction: column;
+    }
+
+    #game-controls {
+        margin-bottom: 20px;
+    }
+
+    #game-board {
+        display: grid;
+        gap: 5px;
+        grid-template-columns: repeat(var(--board-size, 4), 50px);
+        grid-template-rows: repeat(var(--board-size, 4), 50px);
+    }
+
+    .tile {
+        width: 50px;
+        height: 50px;
+        background-color: #ccc;
+        text-align: center;
+        line-height: 50px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+</style>
+<body>
+<div class="container">
+<div class="game">
+
+<div id="game-controls">
+    <label for="difficulty">Choose difficulty:</label>
+    <select id="difficulty">
+        <option value="4">Easy (4x4)</option>
+        <option value="6">Medium (6x6)</option>
+        <option value="8">Hard (8x8)</option>
+    </select>
+    <button id="start-button">Start Game</button>
+</div>
+<p>Moves: <span id="move-counter">0</span> | Matches: <span id="match-counter">0</span></p>
+<div id="game-board"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        let boardSize = 4;
+        let tiles = [];
+        let flippedTiles = [];
+        let moves = 0;
+        let matches = 0;
+
+        function initializeBoard() {
+            // Generate pairs of random numbers for tiles
+            const pairs = [];
+            for (let i = 0; i < boardSize * boardSize / 2; i++) {
+                pairs.push(i + 1);
+                pairs.push(i + 1);
+            }
+
+            // Shuffle the pairs
+            pairs.sort(() => Math.random() - 0.5);
+
+            // Create and append tiles to the game board
+            const gameBoard = $("#game-board");
+            gameBoard.empty(); // Clear the previous board
+            gameBoard.css("--board-size", boardSize);
+            for (let i = 0; i < boardSize * boardSize; i++) {
+                const tile = $("<div>").addClass("tile").attr("data-id", i);
+                gameBoard.append(tile);
+                tiles.push({
+                    id: i,
+                    value: pairs[i],
+                    flipped: false
+                });
+
+                tile.click(function() {
+                    flipTile($(this));
+                });
+            }
+        }
+
+        function flipTile(tile) {
+            const tileId = tile.data("id");
+            const selectedTile = tiles[tileId];
+
+            if (!selectedTile.flipped && flippedTiles.length < 2) {
+                // Flip the tile
+                tile.text(selectedTile.value);
+                selectedTile.flipped = true;
+                flippedTiles.push(selectedTile);
+
+                // Check for a match after flipping two tiles
+                if (flippedTiles.length === 2) {
+                    const tile1 = flippedTiles[0];
+                    const tile2 = flippedTiles[1];
+
+                    // Increase moves count
+                    moves++;
+                    $("#move-counter").text(moves);
+
+                    if (tile1.value === tile2.value && tile1.id !== tile2.id) {
+                        // Match found
+                        matches++;
+                        $("#match-counter").text(matches);
+                        if (matches === boardSize * boardSize / 2) {
+                            // All matches found, game over
+                            $("#game-board").trigger("gameover");
+                            alert("Congratulations! You've matched all tiles in " + moves + " moves. Game over!");
+
+                        }
+                        flippedTiles = [];
+                    } else {
+                        // No match, flip the tiles back after a short delay
+                        setTimeout(function() {
+                            $(".tile[data-id='" + tile1.id + "'], .tile[data-id='" + tile2.id + "']").text("").removeClass("flipped");
+                            tile1.flipped = false;
+                            tile2.flipped = false;
+                            flippedTiles = [];
+                        }, 1000);
+                    }
+                }
+            }
+        }
+
+        function saveGameResults() {
+
+            // Przesyłamy wyniki gry do serwera PHP za pomocą AJAX
+            $.ajax({
+                type: "POST",
+                url: "saveResults.php", // Wpisz ścieżkę do pliku PHP
+                data: {
+                    moves: moves,
+                    matches: matches,
+                    boardSize: boardSize
+                },
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        }
+
+
+        function startGame() {
+            boardSize = parseInt($("#difficulty").val(), 10);
+            tiles = [];
+            flippedTiles = [];
+            moves = 0;
+            matches = 0;
+            $("#move-counter").text(moves);
+            $("#match-counter").text(matches);
+            initializeBoard();
+        }
+
+        // Event listener for the start button
+        $("#start-button").click(function() {
+            startGame();
+        });
+
+        // Event listener for saving game results
+        $("#game-board").on("gameover", function() {
+            saveGameResults();
+        });
+
+        // Initial board setup
+        initializeBoard();
+    });
+</script>
+</div>
+</div>
+</body>
+</html>

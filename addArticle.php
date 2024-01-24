@@ -1,8 +1,6 @@
 <?php
 include 'functions.php';
-// We need to use sessions, so you should always start sessions using the below code.
 session_start();
-// If the user is not logged in redirect to the login page...
 if (!isset($_SESSION['loggedin'])) {
     header('Location: test\login.html');
     exit;
@@ -18,26 +16,30 @@ if (!isset($_SESSION['loggedin'])) {
 
 <?php
 try {
-//    include('functions.php');
     $pdo = pdo_connect_mysql();
     $msg = '';
+
+    $categories_query = "SELECT id, category FROM category";
+    $categories_statement = $pdo->prepare($categories_query);
+    $categories_statement->execute();
+
+    $categories = $categories_statement->fetchAll(PDO::FETCH_ASSOC);
     if (isset($_REQUEST['submit'])) {
         if (!empty($_POST['content'])) {
             $title = isset($_POST['title']) ? $_POST['title'] : '';
             $content = $_POST['content'];
+            $category = $_POST['category'];
             $id = '';
             $autor = $_SESSION['id'];
             $date = date('Y-m-d H:i:s');
-            $stmt = $pdo->prepare('INSERT INTO articles VALUES (?, ?,?,?,?)');
-            $stmt->execute([$id, $title, $content, $autor, $date]);
+            $stmt = $pdo->prepare('INSERT INTO articles VALUES (?, ?,?,?,?,?)');
+            $stmt->execute([$id, $title, $content, $autor, $date,$category]);
             $msg = 'Created Successfully!';
             header("Location: index2.php");
             exit();
 
         } else {
             $msg = 'Błąd danych';
-//            header("Location: addArticle.php");
-//            exit();
         }
     }
 } catch (Exception $e) {
@@ -55,10 +57,7 @@ try {
         </aside>
 
         <div class="contents">
-            <h1>Dodawanie wpisu | użytkownik > <?= $_SESSION['name'] ?></h1>
-            <!--            <div id="editor">-->
-            <!--                <p>This is some sample content.</p>-->
-            <!--            </div>-->
+            <h1>Dodawanie wpisu | autor: <?= $_SESSION['name'] ?></h1>
             <form method="post">
                 <div class="form-group">
                     <label for="title">Tytuł</label>
@@ -66,15 +65,24 @@ try {
 
                     <textarea id="content" name="content" class="form-control" placeholder="Treść wpisu" ></textarea>
                 </div>
+                <br>
+                <div class="form-group">
+                    <label for="category">Kategoria</label>
+                    <select id="category" name="category" class="form-control">
+                        <?php
+                        foreach ($categories as $category) {
+                            echo "<option value=\"{$category['id']}\">{$category['category']}</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
                 <div class="form-group">
                     <input type="submit" name="submit" value="Zapisz" class="bn632-hover bn25">
-
                 </div>
             </form>
             <?php if ($msg): ?>
                 <p><?= $msg ?></p>
             <?php endif; ?>
-
 
         </div>
 
@@ -83,16 +91,15 @@ try {
     <?= template_foot() ?>
 
 </div>
-
 </body>
 </html>
-<!--<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>-->
+<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
 <script src="ckeditor/ckeditor.js"></script>
 <script src="ckeditor/translations/pl.js"></script>
 <script>
     ClassicEditor
         .create(document.querySelector('#content'), {
-            // language: 'pl'
+            language: 'pl',
             ckfinder:
                 {
                     uploadUrl: 'fileupload.php'

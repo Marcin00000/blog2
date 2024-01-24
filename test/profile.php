@@ -28,35 +28,37 @@ $stmt->close();
 <html lang="pl">
 <head>
     <meta charset="utf-8">
-    <title>Profile Page</title>
+    <title>Strona profilu</title>
     <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../fontawesome6.5.1-web/css/all.css">
+
     <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">-->
 </head>
 <body class="loggedin">
 <nav class="navtop">
     <div>
-        <h1>Website Title</h1>
+        <h1>BLOG</h1>
+        <a href="../index.php"><i class="fa-solid fa-house"></i>Blog</a>
         <a href="profile.php"><i class="fas fa-user-circle"></i>Profil</a>
-        <a href="../index.php"><i class="fas fa-user-circle"></i>Blog</a>
         <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Wyloguj</a>
         <?php
         if ($_SESSION['admin']){
-        echo "<a href='../panelAdmin/index.php'>Panel administracyjny</a>";
+        echo "<a href='../panelAdmin/index.php'><i class='fa-solid fa-toolbox'></i>Panel administracyjny</a>";
         }
         ?>
     </div>
 </nav>
 <div class="content">
-    <h2>Profile Page</h2>
+    <h2>Strona profilu</h2>
     <div>
-        <p>Your account details are below:</p>
+        <p>Dane Twojego konta znajdują się poniżej:</p>
         <table>
             <tr>
-                <td>Username:</td>
+                <td>Nazwa:</td>
                 <td><?= $_SESSION['name'] ?></td>
             </tr>
             <tr>
-                <td>Password:</td>
+                <td>Hasło:</td>
                 <td><?= $password ?></td>
             </tr>
             <tr>
@@ -64,7 +66,7 @@ $stmt->close();
                 <td><?= $email ?></td>
             </tr>
             <tr>
-                <td>Email:</td>
+                <td>Admin:</td>
                 <td><?= $admin ?></td>
             </tr>
         </table>

@@ -19,16 +19,18 @@ function pdo_connect_mysql() {
 		<meta charset="utf-8">
 		<title>$title</title>
 		<link href="style.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="../fontawesome6.5.1-web/css/all.css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 	</head>
 	<body>
     <nav class="navtop">
     	<div>
     		<h1>Panel administracyjny</h1>
+    		<a href="../index.php"><i class='fa-solid fa-house'></i> Blog </a>
             <a href="index.php"><i class="fas fa-home"></i>Home</a>
-    		<a href="read.php"><i class="fas fa-address-book"></i>Użytkownicy</a>
-    		<a href="readArticle.php"><i class="fas fa-address-book"></i>Artykuły</a>
-    		<a href="../test/profile.php"><i class="fas fa-address-book"></i>Profil</a>		
+    		<a href="read.php"><i class="fa-solid fa-users"></i>Użytkownicy</a>
+    		<a href="readArticle.php"><i class="fa-solid fa-book"></i>Artykuły</a>
+    		<a href="../test/profile.php"><i class="fas fa-user-circle"></i>Profil</a>		
     	</div>
     </nav>
 EOT;

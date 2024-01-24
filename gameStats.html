@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Statystyka</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link href="comm/comments.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link rel="stylesheet" href="fontawesome6.5.1-web/css/all.css">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.php"><i class='fa-solid fa-house'></i> Główna </a></li>
+            <li><a href="index2.php"> <i class="fa-solid fa-book"></i> Artykuły </a></li>
+            <li><a href="game.html"> <i class="fa-solid fa-gamepad"></i> Gra </a></li>
+            <li><a href="gameStats.html"> <i class="fa-solid fa-trophy"></i> Statystyki Gier </a></li>
+            <li><a href="addArticle.php"> <i class="fa-solid fa-pen-to-square"></i> Dodaj Artykuł </a></li>
+            <li><a href="test/profile.php"> <i class="fa-solid fa-user"></i> Profil </a></li>
+        </ul>
+    </nav>
+    <aside></aside>
+<div class="game">
+
+<h1>Tablica wyników</h1>
+
+<div class="search-form">
+    <label for="player-name">Wyszukaj statystyki graczy: </label>
+    <input type="text" id="player-name" name="player-name">
+    <button id="search-button">Szukaj</button>
+</div>
+
+<div id="leaderboard-container"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Pobierz wyniki gier za pomocą AJAX i wstaw do kontenera
+        function loadLeaderboard() {
+            $.ajax({
+                type: "GET",
+                url: "gameStats.php",
+                success: function(response) {
+                    $("#leaderboard-container").html(response);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        // Obsługa przycisku "Search"
+        $("#search-button").click(function() {
+            var playerName = $("#player-name").val();
+            if (playerName !== "") {
+                $.ajax({
+                    type: "GET",
+                    url: "playerStats.php",
+                    data: {
+                        playerName: playerName
+                    },
+                    success: function(response) {
+                        $("#leaderboard-container").html(response);
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                // Jeśli pole playerName jest puste, załaduj standardowe wyniki
+                loadLeaderboard();
+            }
+        });
+
+        // Załaduj domyślne wyniki przy starcie strony
+        loadLeaderboard();
+    });
+</script>
+</div>
+    <footer>
+        <p>Autor xyz</p>
+    </footer>
+</div>
+
+</body>
+</html>

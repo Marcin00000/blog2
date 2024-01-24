@@ -135,17 +135,17 @@ class BlackjackGame
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Blog</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 <div class="container">
     <nav class="navbar">
         <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="index2.php">Wpisy</a></li>
+            <li><a href="../index.php">Home</a></li>
+            <li><a href="../index2.php">Wpisy</a></li>
             <li><a href="index3.php">Oczko</a></li>
-            <li><a href="index.php">ToDo</a></li>
-            <li><a href="test/profile.php">Profile</a></li>
+            <li><a href="../index.php">ToDo</a></li>
+            <li><a href="../test/profile.php">Profile</a></li>
 
         </ul>
     </nav>

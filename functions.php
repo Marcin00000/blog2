@@ -33,16 +33,16 @@ EOT;
 function template_nav()
 {
     echo <<<EOT
-<nav class="navbar">
-    <ul>
-        <li><a href="index.php"><i class='fa-solid fa-house'></i> Główna </a></li>
-        <li><a href="index2.php"> <i class="fa-solid fa-book"></i> Artykuły </a></li>
-<!--        <li><a href="index3.php">Oczko</a></li>-->
-        <li><a href="addArticle.php"> <i class="fa-solid fa-pen-to-square"></i> Dodawanie </a></li>
-        <li><a href="test/profile.php"> <i class="fa-solid fa-user"></i> Profile </a></li>
-
-    </ul>
-</nav>
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.php"><i class='fa-solid fa-house'></i> Główna </a></li>
+            <li><a href="index2.php"> <i class="fa-solid fa-book"></i> Artykuły </a></li>
+            <li><a href="game.html"> <i class="fa-solid fa-gamepad"></i> Gra </a></li>
+            <li><a href="gameStats.html"> <i class="fa-solid fa-trophy"></i> Statystyki Gier </a></li>
+            <li><a href="addArticle.php"> <i class="fa-solid fa-pen-to-square"></i> Dodaj Artykuł </a></li>
+            <li><a href="test/profile.php"> <i class="fa-solid fa-user"></i> Profil </a></li>
+        </ul>
+    </nav>
 EOT;
 }
 

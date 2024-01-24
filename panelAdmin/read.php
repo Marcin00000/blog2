@@ -32,18 +32,17 @@ if ($stmt = $pdo->prepare('SELECT * FROM accounts ORDER BY id LIMIT :calc_page, 
     <?= template_header('Read') ?>
 
     <div class="content read">
-        <h2>Stwórz użytkownika</h2>
-        <a href="../test/register.html" class="create-contact">Stwórz użytkownika</a>
+        <h2>Zarządzaj użytkownikami</h2>
+        <a href="../test/register.html" class="create-contact"><i class="fa-solid fa-plus"></i> Stwórz użytkownika</a>
         <table>
             <thead>
             <tr>
                 <td>#</td>
-                <td>Name</td>
+                <td>Nazwa użytkownika</td>
                 <td>Email</td>
-                <td>Phone</td>
-                <td>Title</td>
-                <td>Created</td>
-                <td></td>
+                <td>Hasło</td>
+                <td>Admin</td>
+                <td>Akcja</td>
             </tr>
             </thead>
             <tbody>
@@ -54,9 +53,8 @@ if ($stmt = $pdo->prepare('SELECT * FROM accounts ORDER BY id LIMIT :calc_page, 
                     <td><?= $contact['email'] ?></td>
                     <td><?= $contact['password'] ?></td>
                     <td><?= $contact['admin'] ?></td>
-                    <td><?= $contact['admin'] ?></td>
                     <td class="actions">
-                        <a href="update.php?id=<?= $contact['id'] ?>" class="edit"><i class="fas fa-pen fa-xs"></i></a>
+                        <a href="update.php?id=<?= $contact['id'] ?>" class="edit"><i class="fas fa-pen fa-xs"> </i></a>
                         <a href="delete.php?id=<?= $contact['id'] ?>" class="trash"><i class="fas fa-trash fa-xs"></i></a>
                     </td>
                 </tr>

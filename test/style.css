@@ -206,3 +206,24 @@ body.loggedin {
     background-color: #2868c7;
     transition: background-color 0.2s;
 }
+
+/* Styl dla znacznika p */
+.register > p, .login > p {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #ffffff;
+    margin-bottom: 20px;
+    background-color: #3274d6; /* Kolor tła (niebieski) */
+    padding: 15px; /* Dodaj padding dla lepszego efektu */
+    transition: background-color 0.3s ease; /* Dodaj efekt przejścia */
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Styl dla znacznika p w stanie najechania */
+.register > p:hover, .login > p:hover {
+    background-color: #2868c7; /* Jasniejszy kolor niebieski po najechaniu */
+    transition: background-color 0.2s;
+
+}

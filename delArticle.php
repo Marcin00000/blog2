@@ -11,29 +11,25 @@ if (!isset($_SESSION['loggedin'])) {
 
 <?php
 try {
-//include 'functions.php';
 $pdo = pdo_connect_mysql();
 $msg = '';
 $msg2 = '';
-// Check that the contact ID exists
 if (isset($_GET['id'])) {
-    // Select the record that is going to be deleted
     $stmt = $pdo->prepare('SELECT * FROM articles WHERE id = ?');
     $stmt->execute([$_GET['id']]);
     $article = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$article) {
         exit('Contact doesn\'t exist with that ID!');
     }
-    // Make sure the user confirms beore deletion
     if (isset($_GET['confirm'])) {
         if ($_GET['confirm'] == 'yes') {
-            // User clicked the "Yes" button, delete record
             $stmt = $pdo->prepare('DELETE FROM articles WHERE id = ?');
+            $stmt->execute([$_GET['id']]);
+            $stmt = $pdo->prepare('DELETE FROM comments WHERE page_id = ?');
             $stmt->execute([$_GET['id']]);
             $msg = 'Usunąłeś artykuł!';
             $msg2 = "<a href='index2.php'><button class='bn632-hover bn25'><i class='fa-solid fa-circle-left'></i> Powrót</button></a>";
         } else {
-            // User clicked the "No" button, redirect them back to the read page
             header('Location: index2.php');
             exit;
         }
@@ -70,12 +66,8 @@ if (isset($_GET['id'])) {
             <?php endif; ?>
 
         </div>
-
     </main>
-
     <?= template_foot() ?>
-
 </div>
-
 </body>
 </html>

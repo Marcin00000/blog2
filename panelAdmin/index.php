@@ -16,9 +16,9 @@ if (!($_SESSION['admin'])) {
 <?=template_header('Home')?>
 
     <div class="content">
-        <h2>Home</h2>
+        <h2>Strona główna</h2>
        <?=  $_SESSION['admin']; ?>
-        <p>Welcome to the home page!</p>
+        <p>Witamy na stronie głównej!</p>
     </div>
 
 <?=template_footer()?>
