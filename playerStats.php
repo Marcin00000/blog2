@@ -1,5 +1,4 @@
 <?php
-// Połącz z bazą danych (ustaw odpowiednie dane dostępowe)
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -8,13 +7,10 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
 $playerName = $_GET["playerName"];
-
 if (!empty($playerName)) {
     $sql = "SELECT player, moves, created_at, board_size FROM game WHERE player = '$playerName' ORDER BY moves ASC";
     $result = $conn->query($sql);
-
     if ($result->num_rows > 0) {
         echo "<div class='leaderboard-section'>";
         echo "<h2>Statystyki graczy dla $playerName</h2>";
@@ -24,7 +20,6 @@ if (!empty($playerName)) {
         while ($row = $result->fetch_assoc()) {
             echo "<tr><td>{$row['player']}</td><td>{$row['moves']}</td><td>{$row['created_at']}</td><td>{$row['board_size']}</td></tr>";
         }
-
         echo "</table></div>";
     } else {
         echo "No records found for player: $playerName";
@@ -32,8 +27,6 @@ if (!empty($playerName)) {
 } else {
     echo "Player name not provided.";
 }
-
-// Zamknij połączenie
 $conn->close();
 ?>
 <?php

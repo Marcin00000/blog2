@@ -8,13 +8,14 @@ if (!isset($_SESSION['loggedin'])) {
 ?>
 
 <?= template_head('Aktualizuj artykuł') ?>
-
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <?php
 try {
     $pdo = pdo_connect_mysql();
     $msg = '';
 
-    $categories_query = "SELECT id, category FROM category";
+    $categories_query = "SELECT id, category FROM category where id > 1";
     $categories_statement = $pdo->prepare($categories_query);
     $categories_statement->execute();
     $categories = $categories_statement->fetchAll(PDO::FETCH_ASSOC);
@@ -29,7 +30,7 @@ try {
                 $autor = $_SESSION['id'];
                 $date = date('Y-m-d H:i:s');
                 $stmt = $pdo->prepare('UPDATE articles SET id = ?, title = ?, content = ?, autor = ?, data = ?, category_id = ? WHERE id = ?');
-                $stmt->execute([$id, $title, $content, $autor, $date,$category, $_GET['id']]);
+                $stmt->execute([$id, $title, $content, $autor, $date, $category, $_GET['id']]);
                 $msg = 'Updated Successfully!';
                 header("Location: index2.php");
                 exit();
@@ -38,12 +39,12 @@ try {
                 $msg = 'Błąd danych';
             }
         }
-            $stmt = $pdo->prepare('SELECT * FROM articles WHERE id = ?');
-            $stmt->execute([$_GET['id']]);
-            $article = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (!$article) {
-                exit('Contact doesn\'t exist with that ID!');
-            }
+        $stmt = $pdo->prepare('SELECT * FROM articles WHERE id = ?');
+        $stmt->execute([$_GET['id']]);
+        $article = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$article) {
+            exit('Contact doesn\'t exist with that ID!');
+        }
     } else {
         exit('No ID specified!');
     }
@@ -85,8 +86,10 @@ try {
                         ?>
                     </select>
                 </div>
+                <br>
+                <div class="g-recaptcha" data-sitekey="6Le0c1spAAAAAKyQZQY8zUGc7elkCTJ6M1azCmlX"></div>
                 <div class="form-group">
-                    <input type="submit" name="submit" value="Aktualizuj" class="bn632-hover bn25">
+                    <input type="submit" id="dodaj" name="submit" value="Aktualizuj" class="bn632-hover bn25">
                 </div>
             </form>
             <?php if ($msg): ?>
@@ -123,4 +126,14 @@ try {
         .catch(error => {
             console.error(error);
         });
+</script>
+<script>
+    $(document).on('click', '#dodaj', function () {
+
+        var response = grecaptcha.getResponse();
+        if (response.length == 0) {
+            alert("Jesteś robotem!");
+            return false;
+        }
+    })
 </script>

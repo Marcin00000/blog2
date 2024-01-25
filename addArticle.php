@@ -9,17 +9,18 @@ if (!isset($_SESSION['loggedin'])) {
 
 <?= template_head('Dodaj artykuł') ?>
 <style>
-    .contents{
+    .contents {
         background-color: #f2e9e4;
     }
 </style>
-
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <?php
 try {
     $pdo = pdo_connect_mysql();
     $msg = '';
 
-    $categories_query = "SELECT id, category FROM category";
+    $categories_query = "SELECT id, category FROM category where id > 1";
     $categories_statement = $pdo->prepare($categories_query);
     $categories_statement->execute();
 
@@ -33,7 +34,7 @@ try {
             $autor = $_SESSION['id'];
             $date = date('Y-m-d H:i:s');
             $stmt = $pdo->prepare('INSERT INTO articles VALUES (?, ?,?,?,?,?)');
-            $stmt->execute([$id, $title, $content, $autor, $date,$category]);
+            $stmt->execute([$id, $title, $content, $autor, $date, $category]);
             $msg = 'Created Successfully!';
             header("Location: index2.php");
             exit();
@@ -63,7 +64,7 @@ try {
                     <label for="title">Tytuł</label>
                     <input type="text" name="title" placeholder="Tytuł wpisu" id="title" required>
 
-                    <textarea id="content" name="content" class="form-control" placeholder="Treść wpisu" ></textarea>
+                    <textarea id="content" name="content" class="form-control" placeholder="Treść wpisu"></textarea>
                 </div>
                 <br>
                 <div class="form-group">
@@ -76,8 +77,10 @@ try {
                         ?>
                     </select>
                 </div>
+                <br>
+                <div class="g-recaptcha" data-sitekey="6Le0c1spAAAAAKyQZQY8zUGc7elkCTJ6M1azCmlX"></div>
                 <div class="form-group">
-                    <input type="submit" name="submit" value="Zapisz" class="bn632-hover bn25">
+                    <input type="submit" id="dodaj" name="submit" value="Zapisz" class="bn632-hover bn25">
                 </div>
             </form>
             <?php if ($msg): ?>
@@ -112,4 +115,14 @@ try {
         .catch(error => {
             console.error(error);
         });
+</script>
+<script>
+    $(document).on('click', '#dodaj', function () {
+
+        var response = grecaptcha.getResponse();
+        if (response.length == 0) {
+            alert("Jesteś robotem!");
+            return false;
+        }
+    })
 </script>

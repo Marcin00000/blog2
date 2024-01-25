@@ -37,7 +37,7 @@ function template_nav()
         <ul>
             <li><a href="index.php"><i class='fa-solid fa-house'></i> Główna </a></li>
             <li><a href="index2.php"> <i class="fa-solid fa-book"></i> Artykuły </a></li>
-            <li><a href="game.html"> <i class="fa-solid fa-gamepad"></i> Gra </a></li>
+            <li><a href="game.html"> <i class="fa-solid fa-gamepad"></i> Gra Memory  </a></li>
             <li><a href="gameStats.html"> <i class="fa-solid fa-trophy"></i> Statystyki Gier </a></li>
             <li><a href="addArticle.php"> <i class="fa-solid fa-pen-to-square"></i> Dodaj Artykuł </a></li>
             <li><a href="test/profile.php"> <i class="fa-solid fa-user"></i> Profil </a></li>

@@ -10,7 +10,7 @@ session_start();
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Blog</title>
+    <title>Czytaj</title>
     <link rel="stylesheet" href="style.css" type="text/css">
     <link href="comm/comments.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
@@ -22,8 +22,7 @@ session_start();
     <?= template_nav() ?>
 
     <main>
-        <aside>
-        </aside>
+        <aside></aside>
 
         <div class="contents">
 
@@ -59,17 +58,17 @@ session_start();
                 while ($row = mysqli_fetch_array($result)) {
                     echo "<p>" . $row['content'] . "</p>";
                 }
-                echo "<p>"."Kategoria: " . $row3['category']."</p>";
-                echo "Autor: " . $row2['username']."(". $row2['id'].")";
+                echo "<p>" . "Kategoria: " . $row3['category'] . "</p>";
+                echo "Autor: " . $row2['username'] . "(" . $row2['id'] . ")";
                 echo '</article>';
 
-                if (isset($_SESSION['loggedin'])){
-                if ($_SESSION['admin'] || $_SESSION['id'] == $row2['id']){
-                echo "<div class='button-container'>";
-                echo "<a href='updatearticle.php?id=" . $id . "'><button class='bn632-hover bn22'><i class='fas fa-pen fa-xs'></i>  Edytuj</button></a>" ;
-                echo "<a href='delarticle.php?id=" . $id . "'><button class='bn632-hover bn27'><i class='fas fa-trash fa-xs'></i>   Usuń</button></a>" ;
-                echo "</div>";
-                }
+                if (isset($_SESSION['loggedin'])) {
+                    if ($_SESSION['admin'] || $_SESSION['id'] == $row2['id']) {
+                        echo "<div class='button-container'>";
+                        echo "<a href='updatearticle.php?id=" . $id . "'><button class='bn632-hover bn22'><i class='fas fa-pen fa-xs'></i>  Edytuj</button></a>";
+                        echo "<a href='delarticle.php?id=" . $id . "'><button class='bn632-hover bn27'><i class='fas fa-trash fa-xs'></i>   Usuń</button></a>";
+                        echo "</div>";
+                    }
                 }
 
                 mysqli_close($con);

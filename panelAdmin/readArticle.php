@@ -1,36 +1,17 @@
-
 <?php
-// Below is optional, remove if you have already connected to your database.
-//$mysqli = mysqli_connect('localhost', 'root', '', 'blog');
 include 'functions.php';
-// Connect to MySQL database
 $pdo = pdo_connect_mysql();
-
-// Get the total number of records from our table "students".
 $total_pages = $pdo->query('SELECT COUNT(*) FROM articles')->fetchColumn();
-
-// Check if the page number is specified and check if it's a number, if not return the default page number which is 1.
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
-
-// Number of results to show on each page.
 $num_results_on_page = 5;
-
-//if ($stmt = $mysqli->prepare('SELECT * FROM students ORDER BY name LIMIT ?,?')) {
 if ($stmt = $pdo->prepare('SELECT * FROM articles ORDER BY id LIMIT :calc_page, :num_results_on_page')) {
-// Calculate the page to get the results we need from our table.
-//$calc_page = ($page - 1) * $num_results_on_page;
     $stmt->bindValue(':calc_page', ($page - 1) * $num_results_on_page, PDO::PARAM_INT);
     $stmt->bindValue(':num_results_on_page', $num_results_on_page, PDO::PARAM_INT);
-
-//$stmt->bindValue('ii', $calc_page, $num_results_on_page);
     $stmt->execute();
-// Get the results...
-//$result = $stmt->get_result();
     $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    template_header('Read')
     ?>
-
-    <?= template_header('Read') ?>
-
     <div class="content read">
         <h2>Zarządzaj  artykułami</h2>
         <a href="../addArticle.php" class="create-contact"><i class="fa-solid fa-plus"></i> Stwórz artykuł</a>
@@ -91,9 +72,7 @@ if ($stmt = $pdo->prepare('SELECT * FROM articles ORDER BY id LIMIT :calc_page, 
             <?php endif; ?>
         </div>
     </div>
-
     <?= template_footer() ?>
-
     <?php
 }
 ?>

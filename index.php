@@ -2,82 +2,39 @@
 include 'functions.php';
 template_head('Home')
 ?>
+
 <body>
-<div class="container">
-    <header>
-        <h1>BLOG</h1>
-    </header>
 
-    <?=template_nav()?>
+<?= template_nav() ?>
 
-    <main>
-        <aside></aside>
+<main>
+    <div class="parallax-container" id="home">
+        <div class="logo-text">Marcin Wilk - BLOG</div>
+    </div>
 
-        <div class="contents">
+    <h3>KONTAKT</h3>
 
-            <article>
-                <h2>Home Page</h2>
-                <ul>
-                    <li>News Article</li>
-                    <li>Job Post</li>
-                    <li>Blog Post</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione quidem, repudiandae, suscipit illum
-                    animi ullam omnis at laborum eaque dolorem aliquam quos iure cum deserunt asperiores facere sed
-                    totam
-                    magni?</p>
-            </article>
-
-            <article>
-                <h2>This is an Article</h2>
-                <p>This is independent content</p>
-                <ul>
-                    <li>News Article</li>
-                    <li>Job Post</li>
-                    <li>Blog Post</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione quidem, repudiandae, suscipit illum
-                    animi ullam omnis at laborum eaque dolorem aliquam quos iure cum deserunt asperiores facere sed
-                    totam
-                    magni?</p>
-            </article>
-
-            <article>
-                <h2>This is an Article</h2>
-                <p>This is independent content</p>
-                <ul>
-                    <li>News Article</li>
-                    <li>Job Post</li>
-                    <li>Blog Post</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione quidem, repudiandae, suscipit illum
-                    animi ullam omnis at laborum eaque dolorem aliquam quos iure cum deserunt asperiores facere sed
-                    totam
-                    magni?</p>
-            </article>
-
-            <article>
-                <h2>This is an Article</h2>
-                <p>This is independent content</p>
-                <ul>
-                    <li>News Article</li>
-                    <li>Job Post</li>
-                    <li>Blog Post</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione quidem, repudiandae, suscipit illum
-                    animi ullam omnis at laborum eaque dolorem aliquam quos iure cum deserunt asperiores facere sed
-                    totam
-                    magni?</p>
-            </article>
-
+    <div class="contact-section" id="contact">
+        <div class="w3-row contact-image">
+            <img src="pic/contact.gif" alt="Contact Image">
         </div>
+        <div class="contact-info">
+            <br>
+            <div><i class="fa-solid fa-map-marker fa-fw"></i> Wydział Nauk Ścisłych i Technicznych Uniwersytet Śląski
+            </div>
+            <div><i class="fa-solid fa-phone fa-fw"></i> Telefon: +48 323689866</div>
+            <div><i class="fa-solid fa-envelope fa-fw"></i> Email: wnp@us.edu.pl</div>
+            <div>
+                <i class="fa-solid fa-coffee fa-fw"></i>
+                <a href="https://niemyslniepytaj.github.io/hub/" target="_blank" rel="noopener noreferrer">
+                    Strona o żółwiach
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
 
-    </main>
-
-    <?= template_foot() ?>
-
-</div>
+<?= template_foot() ?>
 
 </body>
-
 </html>
